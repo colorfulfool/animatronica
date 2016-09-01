@@ -1832,18 +1832,25 @@ if(e&&1===a.nodeType)while(c=e[d++])a.removeAttribute(c)}}),hb={set:function(a,b
   };
 
   uploadFileFrom = function(event, callback) {
-    var file, reader;
-    file = event.dataTransfer.files[0];
-    reader = new FileReader();
-    reader.onload = function(event) {
-      var img;
-      img = new Image();
-      img.src = event.target.result;
-      return img.onload = function(event) {
-        return callback(this);
+    var file, imageSrc, reader;
+    if (event.dataTransfer.files.length) {
+      file = event.dataTransfer.files[0];
+      reader = new FileReader();
+      reader.onload = function(event) {
+        var img;
+        img = new Image();
+        img.src = event.target.result;
+        return img.onload = function(event) {
+          return callback(this);
+        };
       };
-    };
-    return reader.readAsDataURL(file);
+      return reader.readAsDataURL(file);
+    } else {
+      imageSrc = event.dataTransfer.getData('url');
+      return callback({
+        src: imageSrc
+      });
+    }
   };
 
   uniqueId = function() {

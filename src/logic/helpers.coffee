@@ -5,13 +5,17 @@ onlyChangedAttributes = (nuw, old) ->
   diff
 
 uploadFileFrom = (event, callback) ->
-  file = event.dataTransfer.files[0]
-  reader = new FileReader()
-  reader.onload = (event) ->
-    img = new Image()
-    img.src = event.target.result
-    img.onload = (event) -> callback(this)
-  reader.readAsDataURL(file)
+  if event.dataTransfer.files.length # it's a file
+    file = event.dataTransfer.files[0]
+    reader = new FileReader()
+    reader.onload = (event) ->
+      img = new Image()
+      img.src = event.target.result
+      img.onload = (event) -> callback(this)
+    reader.readAsDataURL(file)
+  else # it's an <img>
+    imageSrc = event.dataTransfer.getData('url')
+    callback({src: imageSrc})
 
 uniqueId = ->
   s4 = ->
