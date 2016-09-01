@@ -22,8 +22,5 @@ class Keyframe
     for axis of @state
       Keyframe.storage[@actor][@frame][axis] = @state[axis]
 
-  act: ->
-    @actor.state = @state
-
 
 window.Keyframe = Keyframe

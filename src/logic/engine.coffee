@@ -4,6 +4,7 @@
 class Engine
   updateOrCreateKeyframe: (actor, frame) ->
     keyframe = new Keyframe(frame, actor.name)
+    # keyframe.state = onlyChangedAttributes(actor.state, @interpolate(actor, frame))
     keyframe.state = actor.state
     keyframe.persist()
 
