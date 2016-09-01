@@ -1,4 +1,5 @@
 #= require keyframe
+#= require helpers
 
 class Engine
   updateOrCreateKeyframe: (actor, frame) ->

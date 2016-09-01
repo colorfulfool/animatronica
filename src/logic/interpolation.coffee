@@ -17,6 +17,7 @@ class Interpolation
   interpolateBetween: (first, last, frame) ->
     return first.value unless last?
     return last.value unless first?
+    return first.value if first.frame == last.frame
 
     first.value + (last.value - first.value) * (frame - first.frame)/(last.frame - first.frame)
 
