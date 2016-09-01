@@ -45,9 +45,9 @@ button#play { font-size: 20px; }
 }
 
 .examples {
-  /*margin-top: 10px;*/
-  padding: 15px; border-radius: 10px;
-  background-color: #feffcc;
+  padding-top: 10px;
+  /*padding: 15px; border-radius: 10px;*/
+  /*background-color: #feffcc;*/
 }
 .examples img { max-height: 150px; max-width: 150px; }
 .examples .tip { margin-bottom: 20px; }
