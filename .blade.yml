@@ -1,0 +1,15 @@
+load_paths:
+  - src
+  - src/logic
+  - src/render
+  - test
+  - vendor
+
+logical_paths:
+  - animatronica.js
+  - test.js
+
+build:
+  logical_paths:
+    - animatronica.js
+  path: public
