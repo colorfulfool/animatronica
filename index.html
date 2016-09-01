@@ -3,16 +3,17 @@
     <link href="https://fonts.googleapis.com/css?family=Amatic+SC:700|Signika|Nunito:300,400" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="public/animatronica.css">
     <script src="public/animatronica.js"></script>
+    <script src="public/play-button.js"></script>
   </head>
   <body>
     <div class="work-area">
       <div class="instructions">
         <h2>How it works</h2>
         <ol>
-          <li>Drop a picture from your computer onto the canvas somewhere.</li>
-          <li>Move the seeker.</li>
+          <li>Drop a picture from your computer onto that canvas.</li>
+          <li>Move the seeker below.</li>
           <li>Move your picture on canvas.</li>
-          <li>Drag the seeker around between those two points. See what happens?</li>
+          <li>Drag the seeker back-and-forth between those two points. See what happens?</li>
         </ol>
         <div class="examples">
           <p>You can use those:</p>
@@ -23,7 +24,10 @@
           Animate anything
         </div>
         <canvas width="700" height="400" id="board"></canvas>
-        <input type="range" id="seeker" value=0 step=2 min=0 max=300>
+        <div class="controls">
+          <button id="play">▶︎</button>
+          <input type="range" id="seeker" value=0 step=2 min=0 max=300>
+        </div>
         <script type="text/javascript">
           $(function () {
             var canvas = document.getElementById('board')

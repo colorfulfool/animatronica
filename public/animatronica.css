@@ -33,8 +33,14 @@ h2 {
   /*padding: 20px;*/
 }
 #board { border: 1px solid black; }
+
+.controls { 
+  margin-top: 5px;
+  display: flex; align-items: center; 
+}
+button#play { font-size: 20px; }
 #seeker {
-  margin-top: 10px;
+  margin-left: 5px;
   width: 100%; 
 }
 

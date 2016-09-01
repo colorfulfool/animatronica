@@ -6234,6 +6234,7 @@ $.jCanvasObject = jCanvasObject;
       this.canvas = canvas1;
       this.seeker = seeker1;
       this.engine = new Engine();
+      this.warmUpCanvas();
       this.attachInputHandlersTo(this.canvas, this.seeker);
     }
 
@@ -6244,21 +6245,22 @@ $.jCanvasObject = jCanvasObject;
       canvas.ondrop = function(event) {
         event.preventDefault();
         return uploadFileFrom(event, function(image) {
-          var actor, actorId;
+          var actorId;
           actorId = uniqueId();
-          $(canvas).drawImage({
+          return $(canvas).drawImage({
             name: actorId,
             source: image.src,
             draggable: true,
             x: event.layerX,
             y: event.layerY,
             scale: 0.3,
+            add: function(actor) {
+              return Engine.updateOrCreateKeyframe(actor, self.currentFrame());
+            },
             dragstop: function(actor) {
               return Engine.updateOrCreateKeyframe(actor, self.currentFrame());
             }
           });
-          actor = $(self.canvas).getLayer(actorId);
-          return Engine.updateOrCreateKeyframe(actor, self.currentFrame());
         });
       };
       seeker.oninput = function(event) {
@@ -6283,10 +6285,14 @@ $.jCanvasObject = jCanvasObject;
       return $(this.canvas).drawLayers();
     };
 
-    PresentationLayer.prototype.play = function() {
-      if (seeker.value < seeker.max) {
-        return seeker.value += 1;
-      }
+    PresentationLayer.prototype.warmUpCanvas = function() {
+      return $(this.canvas).drawRect({
+        fillStyle: '#fff',
+        x: 0,
+        y: 0,
+        width: 20,
+        height: 20
+      });
     };
 
     return PresentationLayer;

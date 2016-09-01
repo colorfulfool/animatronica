@@ -5,6 +5,7 @@
 class PresentationLayer
   constructor: (@canvas, @seeker) ->
     @engine = new Engine()
+    @warmUpCanvas()
     @attachInputHandlersTo @canvas, @seeker
 
   attachInputHandlersTo: (canvas, seeker) ->
@@ -40,8 +41,7 @@ class PresentationLayer
       $(@canvas).setLayer actor.name, @engine.interpolate(actor, frame).state
     $(@canvas).drawLayers()
 
-  play: ->
-    if seeker.value < seeker.max
-      seeker.value += 1
+  warmUpCanvas: ->
+    $(@canvas).drawRect(fillStyle: '#fff', x: 0, y: 0, width: 20, height: 20)
 
 window.PresentationLayer = PresentationLayer
