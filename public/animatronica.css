@@ -53,3 +53,7 @@ button#play { font-size: 20px; }
 }
 .examples img { max-height: 150px; max-width: 150px; }
 .examples .tip { margin-bottom: 20px; }
+
+.artwork-link { 
+  font-size: smaller; text-align: center;
+}
