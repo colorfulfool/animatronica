@@ -16,7 +16,7 @@ class Keyframe
     @state = {'x': undefined, 'y': undefined, 'rotation': undefined}
 
   persist: ->
-    @storage[@frame][@actor.id] = state
+    @storage[@frame][@actor] = state
 
   act: ->
     @actor.state = @state

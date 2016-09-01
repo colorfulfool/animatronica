@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="public/animatronica.css">
+    <script src="public/animatronica.js"></script>
+  </head>
+  <body>
+    <div class="heading">
+      Animate anything right here
+    </div>
+    <div class="work-area">
+      <div class="instructions">
+        <ol>
+          <li>Drop a picture from your computer onto the canvas.</li>
+          <li>Move it on screen so that it sits niely.</li>
+          <li>Fast-forward with the seeker (below).</li>
+          <li>Change your picture's position on screen.</li>
+          <li>Drag the seeker around between those two points. See what happens?</li>
+          <li>Now to play with it.</li>
+        </ol>
+      </div>
+      <div class="canvas">
+        <canvas width="500" height="300" id="board"></canvas>
+        <input type="range" id="seeker" value=0 step=5 min=0 max=100>
+        <script type="text/javascript">
+          $(function () {
+            var canvas = document.getElementById('board')
+            canvas.width = canvas.parentNode.clientWidth
+            var seeker = document.getElementById('seeker')
+            var animatronica = new PresentationLayer(canvas, seeker)
+          })
+        </script>
+      </div>
+      <div class="examples">
+        <p>Here're some of my pictures you can use:</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+.heading { 
+  font-size: 40px;
+  text-align: center;
+  margin: 40px 0px;
+}
+
+.work-area {
+  display: flex; flex-direction: row;
+  justify-content: space-between;
+}
+.work-area > * { margin: 0px 10px; }
+
+.instructions {
+  max-width: 25%;
+  flex-grow: 2;
+}
+
+.canvas {
+  width: 500px;
+  /*padding: 20px;*/
+}
+#board { border: 1px solid black; }
+#seeker {
+  margin-top: 10px;
+  width: 100%; 
+}
