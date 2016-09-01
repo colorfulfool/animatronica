@@ -30,7 +30,9 @@ h2 {
 
 .canvas {
   width: 700px;
-  /*padding: 20px;*/
+  border: 1px solid black;
+  padding-left: 10px; padding-right: 10px;
+  border-radius: 10px;
 }
 #board { border: 1px solid #aaaaaa; }
 
@@ -45,9 +47,9 @@ button#play { font-size: 20px; }
 }
 
 .examples {
-  padding-top: 10px;
-  /*padding: 15px; border-radius: 10px;*/
-  /*background-color: #feffcc;*/
+  /*padding-top: 10px;*/
+  padding: 15px; border-radius: 10px;
+  background-color: #feffcc;
 }
 .examples img { max-height: 150px; max-width: 150px; }
 .examples .tip { margin-bottom: 20px; }

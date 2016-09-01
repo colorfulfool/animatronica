@@ -35,7 +35,7 @@
         <script type="text/javascript">
           $(function () {
             var canvas = document.getElementById('board')
-            canvas.width = canvas.parentNode.clientWidth
+            canvas.width = canvas.parentNode.clientWidth - 10*2
             var seeker = document.getElementById('seeker')
             var animatronica = new PresentationLayer(canvas, seeker)
           })
