@@ -47,3 +47,4 @@ button#play { font-size: 20px; }
 .examples {
   padding-top: 10px;
 }
+.examples img { max-height: 150px; max-width: 150px; }
