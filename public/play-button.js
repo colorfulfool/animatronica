@@ -14,7 +14,6 @@ $(function () {
       var clock = setInterval(function () {
         if (playing) {
           seeker.value = parseInt(seeker.value) + 2
-          $(seeker).trigger('input')
         } else {
           clearInterval(clock)
         }
@@ -23,6 +22,7 @@ $(function () {
           button.textContent = '▶︎'
           playing = false
         }
+        $(seeker).trigger('input')
       }, 20)
     }
   })
