@@ -17,10 +17,13 @@
           <li>Drag the seeker around between those two points. See what happens?</li>
           <li>Play with it!</li>
         </ol>
+        <div class="examples">
+          <p>Here're some of my pictures you can use:</p>
+        </div>
       </div>
       <div class="canvas">
-        <canvas width="500" height="300" id="board"></canvas>
-        <input type="range" id="seeker" value=0 step=5 min=0 max=100>
+        <canvas width="700" height="400" id="board"></canvas>
+        <input type="range" id="seeker" value=0 step=2 min=0 max=300>
         <script type="text/javascript">
           $(function () {
             var canvas = document.getElementById('board')
@@ -29,9 +32,6 @@
             var animatronica = new PresentationLayer(canvas, seeker)
           })
         </script>
-      </div>
-      <div class="examples">
-        <p>Here're some of my pictures you can use:</p>
       </div>
     </div>
   </body>
