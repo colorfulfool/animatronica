@@ -1,7 +1,17 @@
+body { 
+  line-height: 30px; 
+  font-family: Nunito, sans-serif;
+}
+
 .heading { 
-  font-size: 40px;
+  font-size: 60px; font-weight: bold;
   text-align: center;
-  margin: 40px 0px;
+  margin: 30px 0px;
+  font-family: 'Amatic SC';
+  line-height: 60px;
+}
+h2 { 
+  text-align: center; 
 }
 
 .work-area {
@@ -13,6 +23,9 @@
 .instructions {
   max-width: 25%;
   flex-grow: 2;
+  font-size: 18px;
+  line-height: 30px;
+  font-weight: 300;
 }
 
 .canvas {
@@ -23,4 +36,8 @@
 #seeker {
   margin-top: 10px;
   width: 100%; 
+}
+
+.examples {
+  padding-top: 10px;
 }
