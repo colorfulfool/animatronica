@@ -13,10 +13,14 @@ class Keyframe
     keyframe
 
   constructor: (@frame, @actor) ->
-    @state = {'x': undefined, 'y': undefined, 'rotation': undefined}
+    @state = {x: undefined, y: undefined}
 
   persist: ->
-    @storage[@frame][@actor] = state
+    Keyframe.storage[@actor] = {} unless Keyframe.storage[@actor]?
+    Keyframe.storage[@actor][@frame] = {} unless Keyframe.storage[@actor][@frame]?
+
+    for axis of @state
+      Keyframe.storage[@actor][@frame][axis] = @state[axis]
 
   act: ->
     @actor.state = @state

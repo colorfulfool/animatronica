@@ -1766,14 +1766,18 @@ if(e&&1===a.nodeType)while(c=e[d++])a.removeAttribute(c)}}),hb={set:function(a,b
       this.frame = frame1;
       this.actor = actor1;
       this.state = {
-        'x': void 0,
-        'y': void 0,
-        'rotation': void 0
+        x: void 0,
+        y: void 0
       };
     }
 
     Keyframe.prototype.persist = function() {
-      return this.storage[this.frame][this.actor] = state;
+      var axis, results;
+      results = [];
+      for (axis in this.state) {
+        results.push(Keyframe.storage[this.actor][this.frame][axis] = this.state[axis]);
+      }
+      return results;
     };
 
     Keyframe.prototype.act = function() {
@@ -1791,19 +1795,16 @@ if(e&&1===a.nodeType)while(c=e[d++])a.removeAttribute(c)}}),hb={set:function(a,b
   var onlyChangedAttributes, uniqueId, uploadFileFrom;
 
   onlyChangedAttributes = function(nuw, old) {
-    var diff, i, key, len, ref, results;
+    var diff, i, key, len, ref;
     diff = {};
-    ref = Object.values(old);
-    results = [];
+    ref = Object.keys(old);
     for (i = 0, len = ref.length; i < len; i++) {
       key = ref[i];
       if (nuw[key] !== old[key]) {
-        results.push(diff[key] = nuw[key]);
-      } else {
-        results.push(void 0);
+        diff[key] = nuw[key];
       }
     }
-    return results;
+    return diff;
   };
 
   uploadFileFrom = function(event, callback) {
@@ -1844,7 +1845,7 @@ if(e&&1===a.nodeType)while(c=e[d++])a.removeAttribute(c)}}),hb={set:function(a,b
 
     Engine.prototype.updateOrCreateKeyframe = function(actor, frame) {
       var keyframe;
-      keyframe = new Keyframe(actor.name, frame);
+      keyframe = new Keyframe(frame, actor.name);
       keyframe.state = onlyChangedAttributes(actor.state, this.interpolate(actor, frame));
       return keyframe.persist();
     };
@@ -6236,7 +6237,7 @@ $.jCanvasObject = jCanvasObject;
         });
       };
       seeker.onchange = function(event) {
-        debugger;
+        return this.interpolateFrame(parseInt(event.target.value));
       };
       return canvas.ondragover = function(event) {
         return event.preventDefault();
@@ -6253,7 +6254,7 @@ $.jCanvasObject = jCanvasObject;
       results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         actor = ref[i];
-        results.push(this.engine.interpolateFrame(frame));
+        results.push(actor.setState(this.engine.interpolate(actor, frame)));
       }
       return results;
     };

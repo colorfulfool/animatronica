@@ -1,7 +1,8 @@
 onlyChangedAttributes = (nuw, old) ->
   diff = {}
-  for key in Object.values(old)
+  for key in Object.keys(old)
     diff[key] = nuw[key] if nuw[key] != old[key]
+  diff
 
 uploadFileFrom = (event, callback) ->
   file = event.dataTransfer.files[0]

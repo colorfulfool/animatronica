@@ -1,19 +1,20 @@
-Keyframe.storage = {
-  'sonic': {
-    0: {'x': 10, 'y': 10, 'rotation': 0},
-    10: {'x': 0, 'y': 0},
-    60: {'x': 50}
+QUnit.module 'Interpolation', beforeEach: ->
+  Keyframe.storage = {
+    'sonic': {
+      0: {'x': 10, 'y': 10},
+      10: {'x': 0, 'y': 0},
+      60: {'x': 50}
+    }
   }
-}
 
 QUnit.test 'fetch known state', (assert) ->
-  assert.deepEqual Keyframe.interpolateFor(0, 'sonic').state, {'x': 10, 'y': 10, 'rotation': 0}
+  assert.deepEqual Keyframe.interpolateFor(0, 'sonic').state, {'x': 10, 'y': 10}
 
 QUnit.test 'interpolate partially known', (assert) ->
-  assert.deepEqual Keyframe.interpolateFor(60, 'sonic').state, {'x': 50, 'y': 0, 'rotation': 0}
+  assert.deepEqual Keyframe.interpolateFor(60, 'sonic').state, {'x': 50, 'y': 0}
 
 QUnit.test 'interpolate a tween from scratch', (assert) ->
-  assert.deepEqual Keyframe.interpolateFor(35, 'sonic').state, {'x': 25, 'y': 0, 'rotation': 0}
+  assert.deepEqual Keyframe.interpolateFor(35, 'sonic').state, {'x': 25, 'y': 0}
 
 # internal workings
 
