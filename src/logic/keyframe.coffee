@@ -1,7 +1,9 @@
 #= require interpolation
+#= require actor_manipulation
 
 class Keyframe
   @include Interpolation
+  @include ActorManipulation
 
   @storage = {}
 

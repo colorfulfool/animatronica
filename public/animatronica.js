@@ -1689,6 +1689,26 @@ if(e&&1===a.nodeType)while(c=e[d++])a.removeAttribute(c)}}),hb={set:function(a,b
 
 }).call(this);
 (function() {
+  var ActorManipulation;
+
+  ActorManipulation = (function() {
+    function ActorManipulation() {}
+
+    ActorManipulation.prototype.pullStateFrom = function(actor) {
+      return this.state = {
+        x: actor.x,
+        y: actor.y
+      };
+    };
+
+    return ActorManipulation;
+
+  })();
+
+  window.ActorManipulation = ActorManipulation;
+
+}).call(this);
+(function() {
   var Interpolation;
 
   Interpolation = (function() {
@@ -1750,6 +1770,8 @@ if(e&&1===a.nodeType)while(c=e[d++])a.removeAttribute(c)}}),hb={set:function(a,b
   Keyframe = (function() {
     Keyframe.include(Interpolation);
 
+    Keyframe.include(ActorManipulation);
+
     Keyframe.storage = {};
 
     Keyframe.interpolateFor = function(frame, actor) {
@@ -1773,15 +1795,17 @@ if(e&&1===a.nodeType)while(c=e[d++])a.removeAttribute(c)}}),hb={set:function(a,b
 
     Keyframe.prototype.persist = function() {
       var axis, results;
+      if (Keyframe.storage[this.actor] == null) {
+        Keyframe.storage[this.actor] = {};
+      }
+      if (Keyframe.storage[this.actor][this.frame] == null) {
+        Keyframe.storage[this.actor][this.frame] = {};
+      }
       results = [];
       for (axis in this.state) {
         results.push(Keyframe.storage[this.actor][this.frame][axis] = this.state[axis]);
       }
       return results;
-    };
-
-    Keyframe.prototype.act = function() {
-      return this.actor.state = this.state;
     };
 
     return Keyframe;
@@ -1846,12 +1870,12 @@ if(e&&1===a.nodeType)while(c=e[d++])a.removeAttribute(c)}}),hb={set:function(a,b
     Engine.prototype.updateOrCreateKeyframe = function(actor, frame) {
       var keyframe;
       keyframe = new Keyframe(frame, actor.name);
-      keyframe.state = onlyChangedAttributes(actor.state, this.interpolate(actor, frame));
+      keyframe.pullStateFrom(actor);
       return keyframe.persist();
     };
 
     Engine.prototype.interpolate = function(actor, frame) {
-      return Keyframe.interpolateFor(frame, actor.name).state;
+      return Keyframe.interpolateFor(frame, actor.name);
     };
 
     return Engine;
@@ -6214,30 +6238,31 @@ $.jCanvasObject = jCanvasObject;
     }
 
     PresentationLayer.prototype.attachInputHandlersTo = function(canvas, seeker) {
-      var Engine, currentFrame;
+      var Engine, self;
       Engine = this.engine;
-      currentFrame = this.currentFrame;
+      self = this;
       canvas.ondrop = function(event) {
         event.preventDefault();
         return uploadFileFrom(event, function(image) {
-          return $(canvas).drawImage({
-            name: uniqueId(),
+          var actor, actorId;
+          actorId = uniqueId();
+          $(canvas).drawImage({
+            name: actorId,
             source: image.src,
             draggable: true,
             x: event.layerX,
             y: event.layerY,
             scale: 0.3,
-            load: function(actor) {
-              return Engine.updateOrCreateKeyframe(actor, currentFrame());
-            },
             dragstop: function(actor) {
-              return Engine.updateOrCreateKeyframe(actor, currentFrame());
+              return Engine.updateOrCreateKeyframe(actor, self.currentFrame());
             }
           });
+          actor = $(self.canvas).getLayer(actorId);
+          return Engine.updateOrCreateKeyframe(actor, self.currentFrame());
         });
       };
-      seeker.onchange = function(event) {
-        return this.interpolateFrame(parseInt(event.target.value));
+      seeker.oninput = function(event) {
+        return self.interpolateFrame(parseInt(event.target.value));
       };
       return canvas.ondragover = function(event) {
         return event.preventDefault();
@@ -6249,14 +6274,19 @@ $.jCanvasObject = jCanvasObject;
     };
 
     PresentationLayer.prototype.interpolateFrame = function(frame) {
-      var actor, i, len, ref, results;
+      var actor, i, len, ref;
       ref = $(this.canvas).getLayers();
-      results = [];
       for (i = 0, len = ref.length; i < len; i++) {
         actor = ref[i];
-        results.push(actor.setState(this.engine.interpolate(actor, frame)));
+        $(this.canvas).setLayer(actor.name, this.engine.interpolate(actor, frame).state);
       }
-      return results;
+      return $(this.canvas).drawLayers();
+    };
+
+    PresentationLayer.prototype.play = function() {
+      if (seeker.value < seeker.max) {
+        return seeker.value += 1;
+      }
     };
 
     return PresentationLayer;

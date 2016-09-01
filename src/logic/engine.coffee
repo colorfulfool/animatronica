@@ -4,12 +4,11 @@
 class Engine
   updateOrCreateKeyframe: (actor, frame) ->
     keyframe = new Keyframe(frame, actor.name)
-    # keyframe.state = onlyChangedAttributes(actor.state, @interpolate(actor, frame))
-    keyframe.state = actor.state
+    keyframe.pullStateFrom actor # TODO: only pull what was changed NOW
     keyframe.persist()
 
   interpolate: (actor, frame) ->
-    Keyframe.interpolateFor(frame, actor.name).state
+    Keyframe.interpolateFor(frame, actor.name)
 
 
 window.Engine = Engine
