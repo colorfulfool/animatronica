@@ -32,7 +32,7 @@ h2 {
   width: 700px;
   /*padding: 20px;*/
 }
-#board { border: 1px solid black; }
+#board { border: 1px solid #aaaaaa; }
 
 .controls { 
   margin-top: 5px;
