@@ -12,6 +12,11 @@ uploadFileFrom = (event, callback) ->
     img.onload = (event) -> callback(this)
   reader.readAsDataURL(file)
 
+uniqueId = ->
+  s4 = ->
+    Math.floor((1 + Math.random()) * 0x10000).toString(16).substring 1
+  s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4()
 
 window.onlyChangedAttributes = onlyChangedAttributes
 window.uploadFileFrom = uploadFileFrom
+window.uniqueId = uniqueId

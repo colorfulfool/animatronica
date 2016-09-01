@@ -4,10 +4,10 @@
 
 class PresentationLayer
   constructor: (@canvas, @seeker) ->
-    @attachInputHandlersTo @canvas
     @engine = new Engine()
+    @attachInputHandlersTo @canvas, @seeker
 
-  attachInputHandlersTo: (canvas) ->
+  attachInputHandlersTo: (canvas, seeker) ->
     Engine = @engine
     currentFrame = @currentFrame
 
@@ -15,13 +15,18 @@ class PresentationLayer
       event.preventDefault()
       uploadFileFrom event, (image) ->
         $(canvas).drawImage(
+          name: uniqueId()
           source: image.src, draggable: true,
           x: event.layerX, y: event.layerY,
           scale: 0.3,
-          dragstop: (layer) ->
+          load: (actor) ->
+            Engine.updateOrCreateKeyframe(actor, currentFrame())
+          dragstop: (actor) ->
             Engine.updateOrCreateKeyframe(actor, currentFrame())
         )
-        Engine.updateOrCreateKeyframe(image, currentFrame())
+
+    seeker.onchange = (event) ->
+      @interpolateFrame(parseInt event.target.value)
 
     canvas.ondragover = (event) ->
       event.preventDefault()
@@ -29,12 +34,8 @@ class PresentationLayer
   currentFrame: ->
     parseInt @seeker.value
 
-  createActor: (image) ->
-    actor = new Actor(image)
-    @actors.append(image)
-    @engine.updateOrCreateKeyframe(actor, @currentFrame())
-
   interpolateFrame: (frame) ->
-    @engine.interpolateFrame(frame)
+    for actor in $(@canvas).getLayers()
+      actor.setState @engine.interpolate(actor, frame)
 
 window.PresentationLayer = PresentationLayer

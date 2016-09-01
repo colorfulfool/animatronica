@@ -1788,7 +1788,7 @@ if(e&&1===a.nodeType)while(c=e[d++])a.removeAttribute(c)}}),hb={set:function(a,b
 
 }).call(this);
 (function() {
-  var onlyChangedAttributes, uploadFileFrom;
+  var onlyChangedAttributes, uniqueId, uploadFileFrom;
 
   onlyChangedAttributes = function(nuw, old) {
     var diff, i, key, len, ref, results;
@@ -1821,9 +1821,19 @@ if(e&&1===a.nodeType)while(c=e[d++])a.removeAttribute(c)}}),hb={set:function(a,b
     return reader.readAsDataURL(file);
   };
 
+  uniqueId = function() {
+    var s4;
+    s4 = function() {
+      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    };
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' + s4() + '-' + s4() + s4() + s4();
+  };
+
   window.onlyChangedAttributes = onlyChangedAttributes;
 
   window.uploadFileFrom = uploadFileFrom;
+
+  window.uniqueId = uniqueId;
 
 }).call(this);
 (function() {
@@ -1834,24 +1844,13 @@ if(e&&1===a.nodeType)while(c=e[d++])a.removeAttribute(c)}}),hb={set:function(a,b
 
     Engine.prototype.updateOrCreateKeyframe = function(actor, frame) {
       var keyframe;
-      keyframe = new Keyframe(actor, frame);
+      keyframe = new Keyframe(actor.name, frame);
       keyframe.state = onlyChangedAttributes(actor.state, this.interpolate(actor, frame));
       return keyframe.persist();
     };
 
     Engine.prototype.interpolate = function(actor, frame) {
-      return Keyframe.interpolateFor(frame, actor).state;
-    };
-
-    Engine.prototype.interpolateFrame = function(frame) {
-      var i, keyframe, len, ref, results;
-      ref = Keyframe.allForFrame(frame);
-      results = [];
-      for (i = 0, len = ref.length; i < len; i++) {
-        keyframe = ref[i];
-        results.push(keyframe.act());
-      }
-      return results;
+      return Keyframe.interpolateFor(frame, actor.name).state;
     };
 
     return Engine;
@@ -6206,45 +6205,57 @@ $.jCanvasObject = jCanvasObject;
   var PresentationLayer;
 
   PresentationLayer = (function() {
-    function PresentationLayer(canvas1, seeker) {
+    function PresentationLayer(canvas1, seeker1) {
       this.canvas = canvas1;
-      this.seeker = seeker;
-      this.attachInputHandlersTo(this.canvas);
+      this.seeker = seeker1;
       this.engine = new Engine();
+      this.attachInputHandlersTo(this.canvas, this.seeker);
     }
 
-    PresentationLayer.prototype.attachInputHandlersTo = function(canvas) {
-      var Engine;
+    PresentationLayer.prototype.attachInputHandlersTo = function(canvas, seeker) {
+      var Engine, currentFrame;
       Engine = this.engine;
+      currentFrame = this.currentFrame;
       canvas.ondrop = function(event) {
         event.preventDefault();
         return uploadFileFrom(event, function(image) {
           return $(canvas).drawImage({
+            name: uniqueId(),
             source: image.src,
             draggable: true,
             x: event.layerX,
             y: event.layerY,
             scale: 0.3,
-            dragstop: function(layer) {
-              return Engine.updateOrCreateKeyframe(actor, this.currentFrame());
+            load: function(actor) {
+              return Engine.updateOrCreateKeyframe(actor, currentFrame());
+            },
+            dragstop: function(actor) {
+              return Engine.updateOrCreateKeyframe(actor, currentFrame());
             }
           });
         });
+      };
+      seeker.onchange = function(event) {
+        debugger;
       };
       return canvas.ondragover = function(event) {
         return event.preventDefault();
       };
     };
 
-    PresentationLayer.prototype.createActor = function(image) {
-      var actor;
-      actor = new Actor(image);
-      this.actors.append(image);
-      return this.engine.updateOrCreateKeyframe(actor, this.currentFrame());
+    PresentationLayer.prototype.currentFrame = function() {
+      return parseInt(this.seeker.value);
     };
 
     PresentationLayer.prototype.interpolateFrame = function(frame) {
-      return this.engine.interpolateFrame(frame);
+      var actor, i, len, ref, results;
+      ref = $(this.canvas).getLayers();
+      results = [];
+      for (i = 0, len = ref.length; i < len; i++) {
+        actor = ref[i];
+        results.push(this.engine.interpolateFrame(frame));
+      }
+      return results;
     };
 
     return PresentationLayer;
