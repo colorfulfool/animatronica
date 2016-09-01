@@ -20,11 +20,11 @@ class PresentationLayer
           source: image.src, draggable: true,
           x: event.layerX, y: event.layerY,
           scale: 0.3,
+          add: (actor) ->
+            Engine.updateOrCreateKeyframe(actor, self.currentFrame())
           dragstop: (actor) ->
             Engine.updateOrCreateKeyframe(actor, self.currentFrame())
         )
-        actor = $(self.canvas).getLayer(actorId)
-        Engine.updateOrCreateKeyframe(actor, self.currentFrame())
 
     seeker.oninput = (event) ->
       self.interpolateFrame(parseInt event.target.value)
