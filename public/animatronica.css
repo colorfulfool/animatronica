@@ -18,10 +18,10 @@ h2 {
   display: flex; flex-direction: row;
   justify-content: space-around;
 }
-.work-area > * { margin: 0px 10px; }
+.work-area > * { margin: 0px 15px; }
 
 .instructions {
-  max-width: 25%;
+  max-width: 32ch;
   flex-grow: 2;
   font-size: 18px;
   line-height: 30px;
@@ -45,6 +45,9 @@ button#play { font-size: 20px; }
 }
 
 .examples {
-  padding-top: 10px;
+  /*margin-top: 10px;*/
+  padding: 15px; border-radius: 10px;
+  background-color: #feffcc;
 }
 .examples img { max-height: 150px; max-width: 150px; }
+.examples .tip { margin-bottom: 20px; }
