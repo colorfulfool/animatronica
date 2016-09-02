@@ -1,0 +1,64 @@
+body { 
+  line-height: 30px; 
+  font-family: Nunito, sans-serif;
+}
+
+.heading { 
+  font-size: 60px; font-weight: bold;
+  text-align: center;
+  margin: 30px 0px;
+  font-family: 'Amatic SC';
+  line-height: 60px;
+}
+h2 { 
+  text-align: center; 
+}
+
+.work-area {
+  display: flex; flex-direction: row;
+  justify-content: space-around;
+
+  & > * { margin: 0px 15px; }
+  .instructions {
+    max-width: 32ch;
+    flex-grow: 2;
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: 300;
+  }
+
+  .canvas {
+    width: 700px;
+    border: 1px solid black;
+    padding-left: 10px; padding-right: 10px;
+    border-radius: 10px;
+  }
+
+  .examples {
+    /*padding-top: 10px;*/
+    padding: 15px; border-radius: 10px;
+  }
+}
+
+#board { border: 1px solid #aaaaaa; }
+
+.controls { 
+  margin-top: 5px;
+  display: flex; align-items: center; 
+
+  button#play { font-size: 20px; }
+  #seeker {
+    margin-left: 5px;
+    width: 100%; 
+  }
+}
+
+.examples {
+  background-color: #feffcc;
+
+  .tip { margin-bottom: 20px; }
+  img { max-height: 150px; max-width: 150px; }
+  .artwork-link { 
+    font-size: smaller; text-align: center;
+  }
+}

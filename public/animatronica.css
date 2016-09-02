@@ -1,59 +1,63 @@
-body { 
-  line-height: 30px; 
-  font-family: Nunito, sans-serif;
-}
+body {
+  line-height: 30px;
+  font-family: Nunito, sans-serif; }
 
-.heading { 
-  font-size: 60px; font-weight: bold;
+.heading {
+  font-size: 60px;
+  font-weight: bold;
   text-align: center;
   margin: 30px 0px;
   font-family: 'Amatic SC';
-  line-height: 60px;
-}
-h2 { 
-  text-align: center; 
-}
+  line-height: 60px; }
+
+h2 {
+  text-align: center; }
 
 .work-area {
-  display: flex; flex-direction: row;
-  justify-content: space-around;
-}
-.work-area > * { margin: 0px 15px; }
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around; }
+  .work-area > * {
+    margin: 0px 15px; }
+  .work-area .instructions {
+    max-width: 32ch;
+    flex-grow: 2;
+    font-size: 18px;
+    line-height: 30px;
+    font-weight: 300; }
+  .work-area .canvas {
+    width: 700px;
+    border: 1px solid black;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px; }
+  .work-area .examples {
+    /*padding-top: 10px;*/
+    padding: 15px;
+    border-radius: 10px; }
 
-.instructions {
-  max-width: 32ch;
-  flex-grow: 2;
-  font-size: 18px;
-  line-height: 30px;
-  font-weight: 300;
-}
+#board {
+  border: 1px solid #aaaaaa; }
 
-.canvas {
-  width: 700px;
-  border: 1px solid black;
-  padding-left: 10px; padding-right: 10px;
-  border-radius: 10px;
-}
-#board { border: 1px solid #aaaaaa; }
-
-.controls { 
+.controls {
   margin-top: 5px;
-  display: flex; align-items: center; 
-}
-button#play { font-size: 20px; }
-#seeker {
-  margin-left: 5px;
-  width: 100%; 
-}
+  display: flex;
+  align-items: center; }
+  .controls button#play {
+    font-size: 20px; }
+  .controls #seeker {
+    margin-left: 5px;
+    width: 100%; }
 
 .examples {
-  /*padding-top: 10px;*/
-  padding: 15px; border-radius: 10px;
-  background-color: #feffcc;
-}
-.examples img { max-height: 150px; max-width: 150px; }
-.examples .tip { margin-bottom: 20px; }
+  background-color: #feffcc; }
+  .examples .tip {
+    margin-bottom: 20px; }
+  .examples img {
+    max-height: 150px;
+    max-width: 150px; }
+  .examples .artwork-link {
+    font-size: smaller;
+    text-align: center; }
 
-.artwork-link { 
-  font-size: smaller; text-align: center;
-}
+/*# sourceMappingURL=animatronica.css.map */
