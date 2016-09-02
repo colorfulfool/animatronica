@@ -1,8 +1,11 @@
 #= require jcanvas
 #= require engine
 #= require helpers
+#= require image_export
 
 class PresentationLayer
+  @include ImageExport
+
   constructor: (@canvas, @seeker) ->
     @engine = new Engine()
     @warmUpCanvas()
@@ -28,7 +31,7 @@ class PresentationLayer
         )
 
     seeker.oninput = (event) ->
-      self.interpolateFrame(parseInt event.target.value)
+      self.drawFrame(parseInt event.target.value)
 
     canvas.ondragover = (event) ->
       event.preventDefault()
@@ -36,7 +39,7 @@ class PresentationLayer
   currentFrame: ->
     parseInt @seeker.value
 
-  interpolateFrame: (frame) ->
+  drawFrame: (frame) ->
     for actor in $(@canvas).getLayers()
       $(@canvas).setLayer actor.name, @engine.interpolate(actor, frame).state
     $(@canvas).drawLayers()
