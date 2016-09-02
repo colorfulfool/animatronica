@@ -4,7 +4,7 @@ QUnit.module 'Engine', beforeEach: ->
 engine = new Engine()
 mockActor = {
   name: 'sonic',
-  state: {x: 10, y: 10}
+  x: 10, y: 10
 }
 
 QUnit.test 'first keyframe for a new actor', (assert) ->
@@ -18,7 +18,7 @@ QUnit.test 'add another keyframe for existing actor', (assert) ->
   Keyframe.storage = {
     'sonic': { 0: {x: 10, y: 10} }
   }
-  mockActor.state = {x: 5, y: 2}
+  _.extend(mockActor, {x: 5, y: 2})
 
   engine.updateOrCreateKeyframe(mockActor, 10)
 
@@ -29,7 +29,7 @@ QUnit.test 'update a keyframe', (assert) ->
   Keyframe.storage = {
     'sonic': { 0: {x: 10, y: 10} }
   }
-  mockActor.state = {x: 10, y: 5}
+  _.extend(mockActor, {x: 10, y: 5})
 
   engine.updateOrCreateKeyframe(mockActor, 0)
 
