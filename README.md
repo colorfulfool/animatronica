@@ -13,7 +13,7 @@ To **imitate playback**, increase your current frame input progressively — the
 To **generate a GIF** of the movie, call `generateGif`. It takes some time, hence the callback.
 
 ```javascript
-animatronica.generateGif(function (objectUrl) {
-  window.open(objectUrl)
+animatronica.generateGif(function (imageUrl) {
+  window.open(imageUrl)
 })
 ```
