@@ -25,18 +25,21 @@ h2 {
     font-size: 18px;
     line-height: 30px;
     font-weight: 300; }
-  .work-area .canvas {
+  .work-area .canvas-column .canvas {
     width: 700px;
-    border: 1px solid black;
     padding-left: 10px;
     padding-right: 10px;
+    padding-bottom: 20px;
+    border: 1px solid black;
     border-radius: 10px; }
-    .work-area .canvas .controls {
+    .work-area .canvas-column .canvas .controls {
       margin-top: 5px;
       display: flex;
       align-items: center; }
-    .work-area .canvas .buttons {
-      margin-top: 10px; }
+    .work-area .canvas-column .canvas .buttons {
+      margin-top: 20px; }
+  .work-area .canvas-column #exported {
+    margin-top: 5px; }
   .work-area .examples {
     /*padding-top: 10px;*/
     padding: 15px;
@@ -56,8 +59,11 @@ h2 {
   display: flex;
   align-items: center;
   flex-direction: column; }
-  .buttons #exported {
-    margin-top: 5px; }
+
+#exported img {
+  margin: 0px auto;
+  max-width: 100%;
+  display: block; }
 
 .examples {
   background-color: #feffcc; }

@@ -25,27 +25,29 @@
           <div class="artwork-link">Artwork by <a href="https://vk.com/asinastra" target=blank>Asinastra</a></div>
         </div>
       </div>
-      <div class="canvas">
-        <div class="heading">
-          Animate anything
+      <div class="canvas-column">
+        <div class="canvas">
+          <div class="heading">
+            Animate anything
+          </div>
+          <canvas width="700" height="400" id="board"></canvas>
+          <div class="controls">
+            <button id="play">▶︎</button>
+            <input type="range" id="seeker" value=0 step=2 min=0 max=300>
+          </div>
+          <script type="text/javascript">
+            $(function () {
+              canvas = document.getElementById('board')
+              canvas.width = canvas.parentNode.clientWidth - 10*2
+              seeker = document.getElementById('seeker')
+              window.animatronica = new PresentationLayer(canvas, seeker)
+            })
+          </script>
+          <div class="buttons">
+            <button class="button" id="export">Download as a gif</button>
+          </div>
         </div>
-        <canvas width="700" height="400" id="board"></canvas>
-        <div class="controls">
-          <button id="play">▶︎</button>
-          <input type="range" id="seeker" value=0 step=2 min=0 max=300>
-        </div>
-        <div class="buttons">
-          <button class="button" id="export">Download as a gif</button>
-          <div id="exported"></div>
-        </div>
-        <script type="text/javascript">
-          $(function () {
-            canvas = document.getElementById('board')
-            canvas.width = canvas.parentNode.clientWidth - 10*2
-            seeker = document.getElementById('seeker')
-            window.animatronica = new PresentationLayer(canvas, seeker)
-          })
-        </script>
+        <div id="exported"></div>
       </div>
     </div>
   </body>

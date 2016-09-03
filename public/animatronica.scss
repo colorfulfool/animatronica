@@ -27,17 +27,21 @@ h2 {
     font-weight: 300;
   }
 
-  .canvas {
-    width: 700px;
-    border: 1px solid black;
-    padding-left: 10px; padding-right: 10px;
-    border-radius: 10px;
+  .canvas-column {
+    .canvas {
+      width: 700px;
+      padding-left: 10px; padding-right: 10px;
+      padding-bottom: 20px;
+      border: 1px solid black;
+      border-radius: 10px;
 
-    .controls {
-      margin-top: 5px;
-      display: flex; align-items: center; 
+      .controls {
+        margin-top: 5px;
+        display: flex; align-items: center; 
+      }
+      .buttons { margin-top: 20px; }
     }
-    .buttons { margin-top: 10px; }
+    #exported { margin-top: 5px; }
   }
 
   .examples {
@@ -61,7 +65,11 @@ h2 {
 .buttons { //FIXME: flexbox for something that easy?!
   display: flex; align-items: center;
   flex-direction: column;
-  #exported { margin-top: 5px; }
+}
+#exported img {
+  margin: 0px auto;
+  max-width: 100%;
+  display: block; 
 }
 
 .examples {

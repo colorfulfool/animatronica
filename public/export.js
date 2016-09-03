@@ -3,7 +3,8 @@ $(function () {
   	exportLabel = $('#export.button').html()
 
     window.animatronica.generateGif(function (imageUrl) {
-      $('#exported').html('↳ <a href="' + imageUrl + '" target=blank>Download link</a>')
+      $('#exported').html('<img src="' + imageUrl + '">')
+      $('html,body').animate({scrollTop: $('#exported').offset().top - 27*3})
       $('#export.button').html(exportLabel)
     })
   	$('#export.button').html('Wait a sec...')
