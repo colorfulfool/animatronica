@@ -1,3 +1,4 @@
+#= require helpers
 #= require interpolation
 #= require actor_manipulation
 
@@ -19,7 +20,7 @@ class Keyframe
     for actor, frames of Keyframe.storage
       _.extend(framesAccumulator, frames)
     framesFlattened = Object.keys(framesAccumulator).map((n) -> parseInt(n))
-    _.range(_.min(framesFlattened), _.max(framesFlattened), AnimatronicaSettings.renderEach)
+    paddedRange _.min(framesFlattened), _.max(framesFlattened), AnimatronicaSettings.renderEach
 
   @allActors: ->
     {name: actorName} for actorName in Object.keys(Keyframe.storage)

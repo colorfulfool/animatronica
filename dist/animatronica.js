@@ -1708,6 +1708,69 @@
 
 }).call(this);
 (function() {
+  var onlyChangedAttributes, paddedRange, uniqueId, uploadFileFrom;
+
+  onlyChangedAttributes = function(nuw, old) {
+    var diff, i, key, len, ref;
+    diff = {};
+    ref = Object.keys(old);
+    for (i = 0, len = ref.length; i < len; i++) {
+      key = ref[i];
+      if (nuw[key] !== old[key]) {
+        diff[key] = nuw[key];
+      }
+    }
+    return diff;
+  };
+
+  uploadFileFrom = function(event, callback) {
+    var file, imageSrc, reader;
+    if (event.dataTransfer.files.length) {
+      file = event.dataTransfer.files[0];
+      reader = new FileReader();
+      reader.onload = function(event) {
+        var img;
+        img = new Image();
+        img.src = event.target.result;
+        return img.onload = function(event) {
+          return callback(this);
+        };
+      };
+      return reader.readAsDataURL(file);
+    } else {
+      imageSrc = event.dataTransfer.getData('url');
+      return callback({
+        src: imageSrc
+      });
+    }
+  };
+
+  uniqueId = function() {
+    var s4;
+    s4 = function() {
+      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
+    };
+    return s4() + s4();
+  };
+
+  paddedRange = function(start, end, step) {
+    var array, chunksToAdd, neededNumberOfChunks, numberOfChunks;
+    neededNumberOfChunks = Math.ceil((end - start) / step) + 1;
+    numberOfChunks = (end - start) / step;
+    chunksToAdd = neededNumberOfChunks - numberOfChunks;
+    return array = _.range(start, end + chunksToAdd * step, step);
+  };
+
+  window.onlyChangedAttributes = onlyChangedAttributes;
+
+  window.uploadFileFrom = uploadFileFrom;
+
+  window.uniqueId = uniqueId;
+
+  window.paddedRange = paddedRange;
+
+}).call(this);
+(function() {
   var Interpolation;
 
   Interpolation = (function() {
@@ -1794,7 +1857,7 @@
       framesFlattened = Object.keys(framesAccumulator).map(function(n) {
         return parseInt(n);
       });
-      return _.range(_.min(framesFlattened), _.max(framesFlattened), AnimatronicaSettings.renderEach);
+      return paddedRange(_.min(framesFlattened), _.max(framesFlattened), AnimatronicaSettings.renderEach);
     };
 
     Keyframe.allActors = function() {
@@ -1839,59 +1902,6 @@
   })();
 
   window.Keyframe = Keyframe;
-
-}).call(this);
-(function() {
-  var onlyChangedAttributes, uniqueId, uploadFileFrom;
-
-  onlyChangedAttributes = function(nuw, old) {
-    var diff, i, key, len, ref;
-    diff = {};
-    ref = Object.keys(old);
-    for (i = 0, len = ref.length; i < len; i++) {
-      key = ref[i];
-      if (nuw[key] !== old[key]) {
-        diff[key] = nuw[key];
-      }
-    }
-    return diff;
-  };
-
-  uploadFileFrom = function(event, callback) {
-    var file, imageSrc, reader;
-    if (event.dataTransfer.files.length) {
-      file = event.dataTransfer.files[0];
-      reader = new FileReader();
-      reader.onload = function(event) {
-        var img;
-        img = new Image();
-        img.src = event.target.result;
-        return img.onload = function(event) {
-          return callback(this);
-        };
-      };
-      return reader.readAsDataURL(file);
-    } else {
-      imageSrc = event.dataTransfer.getData('url');
-      return callback({
-        src: imageSrc
-      });
-    }
-  };
-
-  uniqueId = function() {
-    var s4;
-    s4 = function() {
-      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-    };
-    return s4() + s4();
-  };
-
-  window.onlyChangedAttributes = onlyChangedAttributes;
-
-  window.uploadFileFrom = uploadFileFrom;
-
-  window.uniqueId = uniqueId;
 
 }).call(this);
 (function() {

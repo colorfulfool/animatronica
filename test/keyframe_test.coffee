@@ -2,17 +2,17 @@ QUnit.module 'Keyframe', beforeEach: ->
   Keyframe.storage = {
     'sonic': {
       0: {x: 10, y: 10},
-      10: {x: 0, y: 0},
-      60: {x: 50}
+      5: {x: 0, y: 0},
+      9: {x: 50}
     },
     'tails': {
-      15: {x: 0, y: 0},
-      80: {x: 0, y: 50}
+      4: {x: 0, y: 0},
+      10: {x: 0, y: 50}
     }
   }
 
 QUnit.test 'rangeOfFrames', (assert) ->
-  assert.deepEqual Keyframe.rangeOfFrames(), _.range(0, 80, AnimatronicaSettings.renderEach)
+  assert.deepEqual Keyframe.rangeOfFrames(), [0, 4, 8, 12] # assuming renderEach = 4
 
 # QUnit.test 'overwrite existing keyframe by writing close to it', (assert) ->
 #   keyframe = new Keyframe(10+8, 'sonic') # should overwrite 10

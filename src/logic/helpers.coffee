@@ -22,6 +22,14 @@ uniqueId = ->
     Math.floor((1 + Math.random()) * 0x10000).toString(16).substring 1
   s4() + s4()
 
+paddedRange = (start, end, step) ->
+  neededNumberOfChunks = Math.ceil((end-start) / step) + 1
+  numberOfChunks = (end-start) / step
+  chunksToAdd = neededNumberOfChunks - numberOfChunks
+  array = _.range(start, end + chunksToAdd*step, step)
+
+
 window.onlyChangedAttributes = onlyChangedAttributes
 window.uploadFileFrom = uploadFileFrom
 window.uniqueId = uniqueId
+window.paddedRange = paddedRange
