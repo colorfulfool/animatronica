@@ -1683,7 +1683,7 @@
   window.CoffeeScriptMixins.bootstrap();
 
   window.AnimatronicaSettings = {
-    dropEach: 4
+    renderEach: 4
   };
 
 }).call(this);
@@ -1794,7 +1794,7 @@
       framesFlattened = Object.keys(framesAccumulator).map(function(n) {
         return parseInt(n);
       });
-      return _.range(_.min(framesFlattened), _.max(framesFlattened), AnimatronicaSettings.dropEach);
+      return _.range(_.min(framesFlattened), _.max(framesFlattened), AnimatronicaSettings.renderEach);
     };
 
     Keyframe.allActors = function() {
@@ -1931,16 +1931,15 @@
     ImageExport.prototype.generateGif = function(callback) {
       var frameDelay, gif, self;
       gif = new GIF({
-        workers: 2,
-        quality: 10
+        workers: 2
       });
       self = this;
-      frameDelay = 20 * AnimatronicaSettings.dropEach;
+      frameDelay = 20 * (AnimatronicaSettings.renderEach - 1);
       this.eachFrameOfAutoCroppedSequence(function(frame) {
         self.drawFrame(frame);
         return gif.addFrame(self.canvas, {
-          delay: frameDelay,
-          copy: true
+          copy: true,
+          delay: frameDelay
         });
       });
       gif.on('finished', function(blob) {

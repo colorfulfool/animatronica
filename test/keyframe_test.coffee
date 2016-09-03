@@ -12,7 +12,7 @@ QUnit.module 'Keyframe', beforeEach: ->
   }
 
 QUnit.test 'rangeOfFrames', (assert) ->
-  assert.deepEqual Keyframe.rangeOfFrames(), _.range(0, 80, AnimatronicaSettings.dropEach)
+  assert.deepEqual Keyframe.rangeOfFrames(), _.range(0, 80, AnimatronicaSettings.renderEach)
 
 # QUnit.test 'overwrite existing keyframe by writing close to it', (assert) ->
 #   keyframe = new Keyframe(10+8, 'sonic') # should overwrite 10

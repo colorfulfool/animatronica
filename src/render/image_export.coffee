@@ -2,15 +2,14 @@
 
 class ImageExport
   generateGif: (callback) ->
-    gif = new GIF(workers: 2, quality: 10)
+    gif = new GIF(workers: 2)
 
     self = @
-    # canvasContext = @canvas.getContext('2d', 300, 300)
-    frameDelay = 20 * AnimatronicaSettings.dropEach
+    frameDelay = 20 * (AnimatronicaSettings.renderEach-1)
 
     @eachFrameOfAutoCroppedSequence (frame) ->
       self.drawFrame(frame)
-      gif.addFrame(self.canvas, delay: frameDelay, copy: true)
+      gif.addFrame(self.canvas, copy: true, delay: frameDelay)
 
     gif.on 'finished', (blob) ->
       callback URL.createObjectURL(blob)

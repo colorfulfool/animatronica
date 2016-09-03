@@ -7,5 +7,5 @@
 window.CoffeeScriptMixins.bootstrap()
 
 window.AnimatronicaSettings = {
-  dropEach: 4
+  renderEach: 4
 }
