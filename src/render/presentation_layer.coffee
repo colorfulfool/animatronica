@@ -4,14 +4,16 @@
 #= require engine
 #= require helpers
 #= require image_export
+#= require crop_to_paper
 
 class PresentationLayer
   @include ImageExport
+  @include CropToPaper
 
   constructor: (@canvas, @seeker) ->
     @engine = new Engine()
-    @prepareTheCanvas()
-    @attachInputHandlersTo @canvas, @seeker
+    @drawThePaper()
+    @attachInputHandlersTo(@canvas, @seeker)
 
   attachInputHandlersTo: (canvas, seeker) ->
     Engine = @engine
@@ -50,12 +52,5 @@ class PresentationLayer
     for frameNum in Keyframe.rangeOfFrames()
       callback(frameNum)
 
-  prepareTheCanvas: ->
-    shoulderSize = (@canvas.width - @canvas.height - 50)/2
-    $(@canvas).drawRect(
-      fillStyle: '#fff', x: shoulderSize, y: 0, 
-      width: @canvas.width - shoulderSize*2, height: @canvas.height,
-      fromCenter: false, layer: true
-    )
 
 window.PresentationLayer = PresentationLayer
