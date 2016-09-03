@@ -1,4 +1,6 @@
+#= require jquery
 #= require jcanvas
+
 #= require engine
 #= require helpers
 #= require image_export

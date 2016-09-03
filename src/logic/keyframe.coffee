@@ -17,7 +17,7 @@ class Keyframe
   @rangeOfFrames: ->
     framesAccumulator = {}
     for actor, frames of Keyframe.storage
-      $.extend(framesAccumulator, frames)
+      _.extend(framesAccumulator, frames)
     framesFlattened = Object.keys(framesAccumulator).map((n) -> parseInt(n))
     _.range(_.min(framesFlattened), _.max(framesFlattened), AnimatronicaSettings.dropEach)
 

@@ -6,7 +6,6 @@ load_paths:
   - vendor
 
 logical_paths:
-  - animatronica.js
   - test.js
 
 build:
