@@ -2,7 +2,7 @@
 
 class ImageExport
   generateGif: (callback) ->
-    gif = new GIF(workers: 2)
+    gif = new GIF(@cropDimentions @paperDimensions())
 
     self = @
     frameDelay = 20 * (AnimatronicaSettings.renderEach-1)
@@ -15,6 +15,9 @@ class ImageExport
       callback URL.createObjectURL(blob)
 
     gif.render()
+
+  cropDimentions: (dimentions) ->
+    _.extend dimentions, {fullWidth: @canvas.width, fullHeight: @canvas.height}
 
 
 window.ImageExport = ImageExport
