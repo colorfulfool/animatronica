@@ -32,6 +32,12 @@ h2 {
     border: 1px solid black;
     padding-left: 10px; padding-right: 10px;
     border-radius: 10px;
+
+    .controls {
+      margin-top: 5px;
+      display: flex; align-items: center; 
+    }
+    .buttons { margin-top: 10px; }
   }
 
   .examples {
@@ -40,17 +46,22 @@ h2 {
   }
 }
 
-#board { border: 1px solid #aaaaaa; }
+#board { 
+  border: 1px solid #aaaaaa; 
+  background-color: #eeeeee;
+}
 
 .controls { 
-  margin-top: 5px;
-  display: flex; align-items: center; 
-
   button#play { font-size: 20px; }
   #seeker {
     margin-left: 5px;
     width: 100%; 
   }
+}
+.buttons { //FIXME: flexbox for something that easy?!
+  display: flex; align-items: center;
+  flex-direction: column;
+  #exported { margin-top: 5px; }
 }
 
 .examples {
@@ -62,3 +73,5 @@ h2 {
     font-size: smaller; text-align: center;
   }
 }
+
+@import "buttons";

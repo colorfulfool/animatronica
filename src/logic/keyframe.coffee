@@ -14,6 +14,16 @@ class Keyframe
       keyframe.state[axis] = keyframe.interpolateBetween(prev, next, frame)
     keyframe
 
+  @rangeOfFrames: ->
+    framesAccumulator = {}
+    for actor, frames of Keyframe.storage
+      $.extend(framesAccumulator, frames)
+    framesFlattened = Object.keys(framesAccumulator).map((n) -> parseInt(n))
+    _.range(_.min(framesFlattened), _.max(framesFlattened), AnimatronicaSettings.dropEach)
+
+  @allActors: ->
+    {name: actorName} for actorName in Object.keys(Keyframe.storage)
+
   constructor: (@frame, @actor) ->
     @state = {x: undefined, y: undefined}
 

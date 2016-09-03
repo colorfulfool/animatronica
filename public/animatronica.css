@@ -31,23 +31,33 @@ h2 {
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 10px; }
+    .work-area .canvas .controls {
+      margin-top: 5px;
+      display: flex;
+      align-items: center; }
+    .work-area .canvas .buttons {
+      margin-top: 10px; }
   .work-area .examples {
     /*padding-top: 10px;*/
     padding: 15px;
     border-radius: 10px; }
 
 #board {
-  border: 1px solid #aaaaaa; }
+  border: 1px solid #aaaaaa;
+  background-color: #eeeeee; }
 
-.controls {
-  margin-top: 5px;
+.controls button#play {
+  font-size: 20px; }
+.controls #seeker {
+  margin-left: 5px;
+  width: 100%; }
+
+.buttons {
   display: flex;
-  align-items: center; }
-  .controls button#play {
-    font-size: 20px; }
-  .controls #seeker {
-    margin-left: 5px;
-    width: 100%; }
+  align-items: center;
+  flex-direction: column; }
+  .buttons #exported {
+    margin-top: 5px; }
 
 .examples {
   background-color: #feffcc; }
@@ -59,5 +69,22 @@ h2 {
   .examples .artwork-link {
     font-size: smaller;
     text-align: center; }
+
+.button {
+  font-size: 16px;
+  padding: 10px 14px;
+  border-radius: 5px;
+  white-space: nowrap;
+  background-color: white;
+  color: black;
+  position: relative;
+  top: -4px;
+  margin-left: -1px;
+  margin-right: -1px;
+  border: 1px solid #999;
+  box-shadow: 0 4px 0px #999; }
+  .button:active {
+    box-shadow: 0 1px 0px #999;
+    top: 0px; }
 
 /*# sourceMappingURL=animatronica.css.map */

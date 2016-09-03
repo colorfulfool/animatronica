@@ -8,7 +8,7 @@ class PresentationLayer
 
   constructor: (@canvas, @seeker) ->
     @engine = new Engine()
-    @warmUpCanvas()
+    @prepareTheCanvas()
     @attachInputHandlersTo @canvas, @seeker
 
   attachInputHandlersTo: (canvas, seeker) ->
@@ -40,11 +40,20 @@ class PresentationLayer
     parseInt @seeker.value
 
   drawFrame: (frame) ->
-    for actor in $(@canvas).getLayers()
+    for actor in Keyframe.allActors()
       $(@canvas).setLayer actor.name, @engine.interpolate(actor, frame).state
     $(@canvas).drawLayers()
 
-  warmUpCanvas: ->
-    $(@canvas).drawRect(fillStyle: '#fff', x: 0, y: 0, width: 20, height: 20)
+  eachFrameOfAutoCroppedSequence: (callback) ->
+    for frameNum in Keyframe.rangeOfFrames()
+      callback(frameNum)
+
+  prepareTheCanvas: ->
+    shoulderSize = (@canvas.width - @canvas.height - 50)/2
+    $(@canvas).drawRect(
+      fillStyle: '#fff', x: shoulderSize, y: 0, 
+      width: @canvas.width - shoulderSize*2, height: @canvas.height,
+      fromCenter: false, layer: true
+    )
 
 window.PresentationLayer = PresentationLayer

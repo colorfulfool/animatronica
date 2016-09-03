@@ -6,3 +6,7 @@
 #= require_tree .
 
 window.CoffeeScriptMixins.bootstrap()
+
+window.AnimatronicaSettings = {
+  dropEach: 4
+}
