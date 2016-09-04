@@ -22,9 +22,9 @@ class Interpolation
 
     first.value + (last.value - first.value) * (frame - first.frame)/(last.frame - first.frame)
 
-  snapToNearest: (frame, options) ->
-    closeEnoughKeyframes = @nearestChangesByAxis('x').filter (kayframe) ->
-      kayframe? and Math.abs(kayframe.frame - frame) <= options.area/2
+  snapToNearestKeyframe: (frame, options) ->
+    closeEnoughKeyframes = @nearestChangesByAxis('x').filter (keyframe) ->
+      keyframe? and Math.abs(keyframe.frame - frame) <= options.area/2
     if closeEnoughKeyframes.length
       closeEnoughKeyframes[0].frame
     else
