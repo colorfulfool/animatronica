@@ -1,6 +1,7 @@
 class Interpolation
   nearestChangesByAxis: (axis) ->
     frames = Keyframe.storage[@actor]
+    return [] unless frames?
 
     for n in Object.keys(frames)
       value = frames[n][axis]
@@ -20,5 +21,13 @@ class Interpolation
     return first.value if first.frame == last.frame
 
     first.value + (last.value - first.value) * (frame - first.frame)/(last.frame - first.frame)
+
+  snapToNearest: (frame, options) ->
+    closeEnoughKeyframes = @nearestChangesByAxis('x').filter (kayframe) ->
+      kayframe? and Math.abs(kayframe.frame - frame) <= options.area/2
+    if closeEnoughKeyframes.length
+      closeEnoughKeyframes[0].frame
+    else
+      frame
 
 window.Interpolation = Interpolation

@@ -10,5 +10,4 @@ class Engine
   interpolate: (actor, frame) ->
     Keyframe.interpolateFor(frame, actor.name)
 
-
 window.Engine = Engine

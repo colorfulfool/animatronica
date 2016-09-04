@@ -29,11 +29,13 @@ class Keyframe
     @state = {x: undefined, y: undefined}
 
   persist: ->
+    frame = @snapToNearest(@frame, area: 12)
+
     Keyframe.storage[@actor] = {} unless Keyframe.storage[@actor]?
-    Keyframe.storage[@actor][@frame] = {} unless Keyframe.storage[@actor][@frame]?
+    Keyframe.storage[@actor][frame] = {} unless Keyframe.storage[@actor][frame]?
 
     for axis of @state
-      Keyframe.storage[@actor][@frame][axis] = @state[axis]
+      Keyframe.storage[@actor][frame][axis] = @state[axis]
 
 
 window.Keyframe = Keyframe
