@@ -1953,13 +1953,14 @@
     function CropToPaper() {}
 
     CropToPaper.prototype.paperDimensions = function() {
-      var shoulderSize;
-      shoulderSize = (this.canvas.width - this.canvas.height - 50) / 2;
+      var paperHeight, paperWidth;
+      paperWidth = 450;
+      paperHeight = 400;
       return {
-        x: shoulderSize,
-        width: this.canvas.width - shoulderSize * 2,
-        y: 0,
-        height: this.canvas.height
+        x: (this.canvas.width - paperWidth) / 2,
+        width: paperWidth,
+        y: (this.canvas.height - paperHeight) / 2,
+        height: paperHeight
       };
     };
 

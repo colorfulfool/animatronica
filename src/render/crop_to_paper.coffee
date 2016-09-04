@@ -1,9 +1,10 @@
 class CropToPaper
   paperDimensions: ->
-    shoulderSize = (@canvas.width - @canvas.height - 50)/2
+    paperWidth = 450
+    paperHeight = 400
     {
-      x: shoulderSize, width: @canvas.width - shoulderSize*2, 
-      y: 0, height: @canvas.height
+      x: (@canvas.width - paperWidth)/2, width: paperWidth, 
+      y: (@canvas.height - paperHeight)/2, height: paperHeight
     }
 
   drawThePaper: ->
