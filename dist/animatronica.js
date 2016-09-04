@@ -1779,6 +1779,9 @@
     Interpolation.prototype.nearestChangesByAxis = function(axis) {
       var frames, i, j, len, len1, n, next, prev, ref, ref1, value;
       frames = Keyframe.storage[this.actor];
+      if (frames == null) {
+        return [];
+      }
       ref = Object.keys(frames);
       for (i = 0, len = ref.length; i < len; i++) {
         n = ref[i];
@@ -1817,6 +1820,18 @@
         return first.value;
       }
       return first.value + (last.value - first.value) * (frame - first.frame) / (last.frame - first.frame);
+    };
+
+    Interpolation.prototype.snapToNearestKeyframe = function(frame, options) {
+      var closeEnoughKeyframes;
+      closeEnoughKeyframes = this.nearestChangesByAxis('x').filter(function(keyframe) {
+        return (keyframe != null) && Math.abs(keyframe.frame - frame) <= options.area / 2;
+      });
+      if (closeEnoughKeyframes.length) {
+        return closeEnoughKeyframes[0].frame;
+      } else {
+        return frame;
+      }
     };
 
     return Interpolation;
@@ -1883,16 +1898,19 @@
     }
 
     Keyframe.prototype.persist = function() {
-      var axis, results;
+      var axis, frame, results;
+      frame = this.snapToNearestKeyframe(this.frame, {
+        area: 15
+      });
       if (Keyframe.storage[this.actor] == null) {
         Keyframe.storage[this.actor] = {};
       }
-      if (Keyframe.storage[this.actor][this.frame] == null) {
-        Keyframe.storage[this.actor][this.frame] = {};
+      if (Keyframe.storage[this.actor][frame] == null) {
+        Keyframe.storage[this.actor][frame] = {};
       }
       results = [];
       for (axis in this.state) {
-        results.push(Keyframe.storage[this.actor][this.frame][axis] = this.state[axis]);
+        results.push(Keyframe.storage[this.actor][frame][axis] = this.state[axis]);
       }
       return results;
     };
