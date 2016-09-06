@@ -15,7 +15,7 @@ QUnit.test 'rangeOfFrames', (assert) ->
   assert.deepEqual Keyframe.rangeOfFrames(), [0, 4, 8, 12] # assuming renderEach = 4
 
 QUnit.test 'overwrite existing keyframe by writing close to it', (assert) ->
-  keyframe = new Keyframe(9+6, 'sonic') # should overwrite 9
+  keyframe = new Keyframe(9+4, 'sonic') # should overwrite 9
   keyframe.state = {x: 42, y: 42}
   keyframe.persist()
 

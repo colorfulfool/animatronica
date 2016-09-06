@@ -29,7 +29,7 @@ class Keyframe
     @state = {x: undefined, y: undefined}
 
   persist: ->
-    frame = @snapToNearestKeyframe(@frame, area: 15)
+    frame = @snapToNearestKeyframe(@frame, area: 10)
 
     Keyframe.storage[@actor] = {} unless Keyframe.storage[@actor]?
     Keyframe.storage[@actor][frame] = {} unless Keyframe.storage[@actor][frame]?
