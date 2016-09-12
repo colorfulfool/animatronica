@@ -7,7 +7,7 @@ class ImageExport
     self = @
     frameDelay = 20 * (AnimatronicaSettings.renderEach-1)
 
-    @eachFrameOfAutoCroppedSequence (frame) ->
+    @eachFrameOfAutoCutSequence (frame) ->
       self.drawFrame(frame)
       gif.addFrame(self.canvas, copy: true, delay: frameDelay)
 

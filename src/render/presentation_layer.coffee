@@ -48,7 +48,7 @@ class PresentationLayer
       $(@canvas).setLayer actor.name, @engine.interpolate(actor, frame).state
     $(@canvas).drawLayers()
 
-  eachFrameOfAutoCroppedSequence: (callback) ->
+  eachFrameOfAutoCutSequence: (callback) ->
     for frameNum in Keyframe.rangeOfFrames()
       callback(frameNum)
 
