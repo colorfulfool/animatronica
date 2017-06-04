@@ -8,7 +8,7 @@ class Keyframe
 
   @storage = {}
 
-  @interpolateFor: (frame, actor) ->
+  @interpolateAt: (frame, actor) ->
     keyframe = new Keyframe(frame, actor)
     for axis of keyframe.state
       [prev, next] = keyframe.nearestChangesByAxis(axis)
@@ -16,11 +16,11 @@ class Keyframe
     keyframe
 
   @rangeOfFrames: ->
-    framesAccumulator = {}
+    allFrames = {}
     for actor, frames of Keyframe.storage
-      _.extend(framesAccumulator, frames)
-    framesFlattened = Object.keys(framesAccumulator).map((n) -> parseInt(n))
-    paddedRange _.min(framesFlattened), _.max(framesFlattened), AnimatronicaSettings.renderEach
+      _.extend(allFrames, frames)
+    frameNumbers = Object.keys(allFrames).map((n) -> parseInt(n))
+    paddedRange _.min(frameNumbers), _.max(frameNumbers), AnimatronicaSettings.renderEach
 
   @allActors: ->
     {name: actorName} for actorName in Object.keys(Keyframe.storage)

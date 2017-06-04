@@ -7,8 +7,8 @@ class ImageExport
     self = @
     frameDelay = 20 * (AnimatronicaSettings.renderEach-1)
 
-    @eachFrameOfAutoCutSequence (frame) ->
-      self.drawFrame(frame)
+    @eachFrameOfAutoTrimmedSequence (frame) ->
+      self.drawFrame(frame) # draws on self.canvas
       gif.addFrame(self.canvas, copy: true, delay: frameDelay)
 
     gif.on 'finished', (blob) ->

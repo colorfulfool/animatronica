@@ -8,6 +8,6 @@ class Engine
     keyframe.persist()
 
   interpolate: (actor, frame) ->
-    Keyframe.interpolateFor(frame, actor.name)
+    Keyframe.interpolateAt(frame, actor.name)
 
 window.Engine = Engine

@@ -8,13 +8,13 @@ QUnit.module 'Interpolation', beforeEach: ->
   }
 
 QUnit.test 'fetch known state', (assert) ->
-  assert.deepEqual Keyframe.interpolateFor(0, 'sonic').state, {'x': 10, 'y': 10}
+  assert.deepEqual Keyframe.interpolateAt(0, 'sonic').state, {'x': 10, 'y': 10}
 
 QUnit.test 'interpolate partially known', (assert) ->
-  assert.deepEqual Keyframe.interpolateFor(60, 'sonic').state, {'x': 50, 'y': 0}
+  assert.deepEqual Keyframe.interpolateAt(60, 'sonic').state, {'x': 50, 'y': 0}
 
 QUnit.test 'interpolate a tween from scratch', (assert) ->
-  assert.deepEqual Keyframe.interpolateFor(35, 'sonic').state, {'x': 25, 'y': 0}
+  assert.deepEqual Keyframe.interpolateAt(35, 'sonic').state, {'x': 25, 'y': 0}
 
 # internal workings
 
