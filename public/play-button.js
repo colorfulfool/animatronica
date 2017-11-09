@@ -26,4 +26,8 @@ $(function () {
       }, 20)
     }
   })
+
+  $('#fake-seeker').on('input', function () {
+    $(this).replaceWith("Not this one, that one! ↘")
+  })
 })  
