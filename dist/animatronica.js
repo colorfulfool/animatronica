@@ -1851,7 +1851,7 @@
 
     Keyframe.storage = {};
 
-    Keyframe.interpolateFor = function(frame, actor) {
+    Keyframe.interpolateAt = function(frame, actor) {
       var axis, keyframe, next, prev, ref;
       keyframe = new Keyframe(frame, actor);
       for (axis in keyframe.state) {
@@ -1862,17 +1862,17 @@
     };
 
     Keyframe.rangeOfFrames = function() {
-      var actor, frames, framesAccumulator, framesFlattened, ref;
-      framesAccumulator = {};
+      var actor, allFrames, frameNumbers, frames, ref;
+      allFrames = {};
       ref = Keyframe.storage;
       for (actor in ref) {
         frames = ref[actor];
-        _.extend(framesAccumulator, frames);
+        _.extend(allFrames, frames);
       }
-      framesFlattened = Object.keys(framesAccumulator).map(function(n) {
+      frameNumbers = Object.keys(allFrames).map(function(n) {
         return parseInt(n);
       });
-      return paddedRange(_.min(framesFlattened), _.max(framesFlattened), AnimatronicaSettings.renderEach);
+      return paddedRange(_.min(frameNumbers), _.max(frameNumbers), AnimatronicaSettings.renderEach);
     };
 
     Keyframe.allActors = function() {
@@ -1900,7 +1900,7 @@
     Keyframe.prototype.persist = function() {
       var axis, frame, results;
       frame = this.snapToNearestKeyframe(this.frame, {
-        area: 15
+        area: 10
       });
       if (Keyframe.storage[this.actor] == null) {
         Keyframe.storage[this.actor] = {};
@@ -1936,7 +1936,7 @@
     };
 
     Engine.prototype.interpolate = function(actor, frame) {
-      return Keyframe.interpolateFor(frame, actor.name);
+      return Keyframe.interpolateAt(frame, actor.name);
     };
 
     return Engine;
@@ -2501,7 +2501,7 @@
       gif = new GIF(this.cropDimentions(this.paperDimensions()));
       self = this;
       frameDelay = 20 * (AnimatronicaSettings.renderEach - 1);
-      this.eachFrameOfAutoCroppedSequence(function(frame) {
+      this.eachFrameOfAutoTrimmedSequence(function(frame) {
         self.drawFrame(frame);
         return gif.addFrame(self.canvas, {
           copy: true,
@@ -6891,36 +6891,39 @@ $.jCanvasObject = jCanvasObject;
     }
 
     PresentationLayer.prototype.attachInputHandlersTo = function(canvas, seeker) {
-      var Engine, self;
-      Engine = this.engine;
-      self = this;
-      canvas.ondrop = function(event) {
-        event.preventDefault();
-        return uploadFileFrom(event, function(image) {
-          var actorId;
-          actorId = uniqueId();
-          return $(canvas).drawImage({
-            name: actorId,
-            source: image.src,
-            draggable: true,
-            x: event.layerX,
-            y: event.layerY,
-            scale: 0.3,
-            add: function(actor) {
-              return Engine.updateOrCreateKeyframe(actor, self.currentFrame());
-            },
-            dragstop: function(actor) {
-              return Engine.updateOrCreateKeyframe(actor, self.currentFrame());
-            }
+      canvas.ondrop = (function(_this) {
+        return function(event) {
+          event.preventDefault();
+          return uploadFileFrom(event, function(image) {
+            var actorId;
+            actorId = uniqueId();
+            return $(canvas).drawImage({
+              name: actorId,
+              source: image.src,
+              draggable: true,
+              x: event.layerX,
+              y: event.layerY,
+              scale: 0.3,
+              add: function(actor) {
+                return _this.engine.updateOrCreateKeyframe(actor, _this.currentFrame());
+              },
+              dragstop: function(actor) {
+                return _this.engine.updateOrCreateKeyframe(actor, _this.currentFrame());
+              }
+            });
           });
-        });
-      };
-      seeker.oninput = function(event) {
-        return self.drawFrame(parseInt(event.target.value));
-      };
-      return canvas.ondragover = function(event) {
-        return event.preventDefault();
-      };
+        };
+      })(this);
+      seeker.oninput = (function(_this) {
+        return function(event) {
+          return _this.drawFrame(parseInt(event.target.value));
+        };
+      })(this);
+      return canvas.ondragover = (function(_this) {
+        return function(event) {
+          return event.preventDefault();
+        };
+      })(this);
     };
 
     PresentationLayer.prototype.currentFrame = function() {
@@ -6937,7 +6940,7 @@ $.jCanvasObject = jCanvasObject;
       return $(this.canvas).drawLayers();
     };
 
-    PresentationLayer.prototype.eachFrameOfAutoCroppedSequence = function(callback) {
+    PresentationLayer.prototype.eachFrameOfAutoTrimmedSequence = function(callback) {
       var frameNum, i, len, ref, results;
       ref = Keyframe.rangeOfFrames();
       results = [];

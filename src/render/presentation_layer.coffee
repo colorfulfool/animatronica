@@ -16,28 +16,26 @@ class PresentationLayer
     @attachInputHandlersTo(@canvas, @seeker)
 
   attachInputHandlersTo: (canvas, seeker) ->
-    Engine = @engine
-    self = @
 
-    canvas.ondrop = (event) ->
+    canvas.ondrop = (event) =>
       event.preventDefault()
-      uploadFileFrom event, (image) ->
+      uploadFileFrom event, (image) =>
         actorId = uniqueId()
         $(canvas).drawImage(
           name: actorId
           source: image.src, draggable: true,
           x: event.layerX, y: event.layerY,
           scale: 0.3,
-          add: (actor) ->
-            Engine.updateOrCreateKeyframe(actor, self.currentFrame())
-          dragstop: (actor) ->
-            Engine.updateOrCreateKeyframe(actor, self.currentFrame())
+          add: (actor) =>
+            @engine.updateOrCreateKeyframe(actor, @currentFrame())
+          dragstop: (actor) =>
+            @engine.updateOrCreateKeyframe(actor, @currentFrame())
         )
 
-    seeker.oninput = (event) ->
-      self.drawFrame(parseInt event.target.value)
+    seeker.oninput = (event) =>
+      @drawFrame(parseInt event.target.value)
 
-    canvas.ondragover = (event) ->
+    canvas.ondragover = (event) =>
       event.preventDefault()
 
   currentFrame: ->
