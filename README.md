@@ -8,7 +8,7 @@ seeker = document.getElementById('seeker')
 var animatronica = new PresentationLayer(canvas, seeker)
 ```
 
-To **imitate playback**, increase your current frame input progressively — the canvas will react. I use a delay of 20ms. For my (crappy) example of this, see `play-button.js`.
+To **imitate playback**, increase your current frame input progressively — the canvas will react. I use a delay of 20ms. For my (lousy) example of this, see `play-button.js`.
 
 To **generate a GIF** of the movie, call `generateGif`. It takes some time, hence the callback.
 
